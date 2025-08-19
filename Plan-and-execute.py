@@ -1,5 +1,4 @@
 import operator
-import os
 import warnings
 from typing import Annotated, Tuple, List, TypedDict
 
@@ -13,11 +12,10 @@ from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import create_agent_executor
+import config
+from config import MODEL_NAME, BIG_MODEL_NAME
 
 warnings.filterwarnings("ignore")
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_API_KEY"] = os.getenv("LS_API_KEY")
-os.environ["LANGCHAIN_PROJECT"] = "Agents"
 
 # Define tools
 search = TavilySearchResults(max_results=1)
@@ -25,9 +23,9 @@ tools = [search]
 
 # Define Execution Agent
 prompt = hub.pull("hwchase17/openai-functions-agent")
-llm = ChatOpenAI(model="gpt-3.5-turbo")
+llm = ChatOpenAI(model=MODEL_NAME)
 
-big_llm = ChatOpenAI(model="gpt-4-turbo-preview")
+big_llm = ChatOpenAI(model=BIG_MODEL_NAME)
 
 agent_runnable = create_openai_functions_agent(llm=llm, tools=tools, prompt=prompt)
 

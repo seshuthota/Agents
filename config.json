@@ -1,0 +1,6 @@
+{
+  "LANGCHAIN_TRACING_V2": true,
+  "LANGCHAIN_PROJECT": "Agents",
+  "MODEL_NAME": "gpt-5-2025-08-07",
+  "BIG_MODEL_NAME": "gpt-5-2025-08-07"
+}

@@ -1,4 +1,3 @@
-import os
 import re
 import warnings
 from typing import TypedDict, List
@@ -7,11 +6,10 @@ from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, END
+import config
+from config import BIG_MODEL_NAME
 
 warnings.filterwarnings("ignore")
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_API_KEY"] = os.getenv("LS_API_KEY")
-os.environ["LANGCHAIN_PROJECT"] = "Agents"
 
 
 # Define State
@@ -23,9 +21,7 @@ class ReWOO(TypedDict):
     result: str
 
 
-# llm = ChatOpenAI(model="gpt-3.5-turbo")
-
-big_llm = ChatOpenAI(model="gpt-4-turbo-preview")
+big_llm = ChatOpenAI(model=BIG_MODEL_NAME)
 
 # Planner Node
 prompt = """For the following task, make plans that can solve the problem step by step. For each plan, indicate \

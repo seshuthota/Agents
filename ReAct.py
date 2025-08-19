@@ -1,13 +1,9 @@
-import os
-
+import config
+from config import MODEL_NAME
 from langchain.agents import create_react_agent, AgentExecutor, create_structured_chat_agent
 from langchain_community.tools.ddg_search import DuckDuckGoSearchRun
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_API_KEY"] = os.getenv("LS_API_KEY")
-os.environ["LANGCHAIN_PROJECT"] = "Agents"
 
 search = DuckDuckGoSearchRun()
 tools = [search]
@@ -19,7 +15,7 @@ prompt = PromptTemplate.from_template(
     "times)\nThought: I now know the final answer\nFinal Answer: the final answer to the original input "
     "question\n\nBegin!\n\nQuestion: {input}\nThought:{agent_scratchpad}")
 
-llm = ChatOpenAI(model="gpt-3.5-turbo")
+llm = ChatOpenAI(model=MODEL_NAME)
 
 agent = create_react_agent(llm=llm, tools=tools, prompt=prompt)
 
